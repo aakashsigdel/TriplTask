@@ -13,15 +13,20 @@ class App extends Component {
   cleanPhotosData = photos =>
     photos.map(photo => ({
       image: photo.data.preview.images[0].source.url,
-      isPristine: true,
-      isLoved: false
+      thumbnail: photo.data.thumbnail,
+      title: photo.data.title,
+      author: photo.data.author,
+      likeDetail: {
+        isPristine: true,
+        isLoved: false
+      }
     }));
 
   componentDidMount = () => {
     fetch('https://www.reddit.com/r/aww.json')
       .then(resp => resp.json())
       .then(json => this.setState({
-        photos: this.cleanPhotosData(json.data.children),
+        photos: this.cleanPhotosData(json.data.children.slice(1)),
         isLoading: false
       }))
       .catch(err => alert('Error! Couldn\'t fetch data'));
