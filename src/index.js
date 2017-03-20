@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Navigator } from 'react-native';
+import { Navigator, Text } from 'react-native';
 
+import nav from './components/nav';
 import Cards from './components/Cards';
 import CardList from './components/CardList';
 
@@ -34,9 +35,9 @@ class App extends Component {
 
   renderScene = route => {
     switch(route.name) {
-      case 'cards1':
-        return <Cards photos={this.state.photos} />;
       case 'cards':
+        return <Cards photos={this.state.photos} />;
+      case 'cardList':
         return <CardList photos={this.state.photos} />;
       default:
         return <Cards photos={this.state.photos} />;
@@ -45,8 +46,11 @@ class App extends Component {
 
   render = () => {
     return <Navigator
-      initialRoute={{ name: 'cards' }}
+      initialRoute={{ name: 'cards', title: 'Home' }}
       renderScene={this.renderScene}
+      navigationBar={
+        nav
+      }
     />;
   }
 }
